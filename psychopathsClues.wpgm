@@ -1,0 +1,11 @@
+import wollok.game.*
+import lupa.*
+
+program PsychopathsClues {
+	game.title("Psychopath's Clues")
+	game.height(10)
+	game.width(15)
+	game.boardGround("fondoLadrillos.png")
+	game.addVisualCharacter(lupa)
+	game.start()
+}
