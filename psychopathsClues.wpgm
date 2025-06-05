@@ -1,11 +1,25 @@
 import wollok.game.*
 import lupa.*
+import pistas.*
 
 program PsychopathsClues {
 	game.title("Psychopath's Clues")
 	game.height(10)
 	game.width(15)
 	game.boardGround("fondoLadrillos.png")
+	const unaPista = new Pista1() //se tiene que revisar y replantear este método de creación de pistas.
+	game.addVisual(unaPista)
+	const otraPista = new Pista2()
+	game.addVisual(otraPista)
+	const pistaYapa = new Pista3()
+	game.addVisual(pistaYapa)
 	game.addVisualCharacter(lupa)
+	game.whenCollideDo(lupa, {e => e.desaparecer() game.say(lupa,lupa.encontrar()) }) //al colisionar con la pista, la misma desaparecera y la lupa te dirá "encontraste una pista"
+	keyboard.space().onPressDo({game.say(lupa, lupa.cuantasPistas())}) //al presionar espacio te dirá la cantidad de pistas encontradas, luego será replanteado para que sea un apartado del mismo hud del juego
 	game.start()
+	/* No se reproduce la música
+	const musicaFondo = game.sound("posible_musica_para_timer.mp3")
+	musicaFondo.shouldLoop(true)
+  	game.schedule(500, {musicaFondo.play()})
+	*/
 }
