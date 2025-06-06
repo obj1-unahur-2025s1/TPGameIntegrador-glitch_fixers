@@ -64,5 +64,5 @@ object guantes {
 object estado {
   method text() = "Pistas encontradas :" + detective.pistasEncontradas().toString() + ".       Tienes "+ detective.vidas().toString() + " vidas."
   const property position = game.at(5, 9)
-  method textColor() = "FF0000FF"
+  method textColor() = "000000"
 }
