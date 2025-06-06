@@ -3,17 +3,18 @@ import wollok.game.*
 import detective.*
 
 program PsychopathsClues {
-	const pista1 = new PistaOjo()
-	const pista2 = new PistaSangre()
-	const pista3 = new PistaCuchillo()
-	const pista4 = new PistaDinamita()
-	const pista5 = new PistaVeneno()
+	const pista1 = new PistaOjo(position = game.at(5, 2))
+	const pista2 = new PistaSangre( position = game.at(8,0))
+	const pista3 = new PistaCuchillo(position = game.at(1, 5))
+	const pista4 = new PistaDinamita(position = game.at(5, 4))
+	const pista5 = new PistaVeneno(position = game.at(13, 3))
 	
 	game.title("Psychopath's Clues")
 	game.height(10)
 	game.width(15)
 
-	game.boardGround("fondoLadrillos.png")
+	//game.boardGround("fondoSotano.jpeg")
+	game.boardGround("fondoSotano2.jpeg")
 
 	game.addVisual(pista1)
 	game.addVisual(pista2)
