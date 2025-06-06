@@ -1,27 +1,37 @@
 class Pista {
-    var property position = game.center()
-    method image() = "lupa.png"
+    var esPistaPeligrosa = false
+    method desaparecer() {
+        game.removeVisual(self)
+    }
+    method esPistaPeligrosa() = esPistaPeligrosa 
+    
 }
 
-class Pista1 inherits Pista {
-    override method image() = "ojo.png"
-    method desaparecer() {
-        //agregar una acción que haga que el objeto cambie a una imagen vacía
-    }
+
+class PistaOjo inherits Pista {
+    method position()= game.at(1, 7)
+    method image() = "ojo.png"
+    
 }
 
-class Pista2 inherits Pista{
-    override method position() = game.at(0,3)
-    override method image() = "sangre.png"
-    method desaparecer() {
-        //agregar una acción que haga que el objeto cambie a una imagen vacía
-    }
+class PistaSangre inherits Pista{
+    method position() = game.at(0,3)
+    method image() = "sangre.png"
+    
 }
 
-class Pista3 inherits Pista {
-    override method position()= game.at(2, 1)
-    override method image() = "cuchillo.png"
-    method desaparecer() {
-        //agregar una acción que haga que el objeto cambie a una imagen vacía
-    }
+class PistaCuchillo inherits Pista {
+    method position()= game.at(2, 1)
+    method image() = "cuchillo.png"
+    
+}
+
+class PistaDinamita inherits Pista(esPistaPeligrosa = true){
+    method position()= game.at(5, 5)
+    method image() = "dinamita.png"
+}
+
+class PistaVeneno inherits Pista(esPistaPeligrosa = true){
+    method position()= game.at(9, 1)
+    method image() = "veneno.png"
 }
