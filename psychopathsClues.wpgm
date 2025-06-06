@@ -1,6 +1,6 @@
 import pistas.*
 import wollok.game.*
-import lupa.*
+import detective.*
 
 program PsychopathsClues {
 	const pista1 = new PistaOjo()
@@ -21,16 +21,14 @@ program PsychopathsClues {
 	game.addVisual(pista4)
 	game.addVisual(pista5)
 	game.addVisual(estado)
-	game.addVisualCharacter(lupa)
+	game.addVisualCharacter(detective)
 
-	game.onCollideDo(lupa, {
-	pista =>pista.desaparecer()
-	lupa.encontrar(pista)})
+	game.onCollideDo(detective, {pista => detective.encontrar(pista)})
 
-	game.say(lupa, "Debo usar guantes para las pistas peligrosas")
+	game.say(detective, "Debo usar guantes para las pistas peligrosas")
 
-	keyboard.g().onPressDo({lupa.ponerseGuantes()})
-	keyboard.l().onPressDo({lupa.quitarseGuantes()})
+	keyboard.g().onPressDo({detective.ponerseGuantes()})
+	keyboard.l().onPressDo({detective.quitarseGuantes()})
 
 	const musicaFondo = game.sound("posible_musica_para_timer.mp3")
 	musicaFondo.play()
