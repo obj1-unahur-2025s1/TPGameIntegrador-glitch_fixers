@@ -6,7 +6,7 @@ import juegoPrincipal.*
 object instrucciones {
   const property position = game.at(0,0)
   const property image = "inicio.jpg"
-  var estaActivada = false
+  var estaActivada = false //variable bandera para que no se ejecute el metodo al apretar enter mientras corre el juego
     method mostrarInstrucciones() {
       if (!estaActivada) {
         game.addVisual(self)

@@ -5,7 +5,7 @@ import pantallaInstrucciones.*
 object inicio {
   const property position = game.at(0,0)
   const property image = "ins.jpg"
-  var estaActivada = false //variable bandera para evitar que se active la pantalla aun con el juego iniciado
+  var estaActivada = false //variable bandera para que no se ejecute el metodo al apretar enter mientras corre el juego
     method mostrarInicio() {
       if(!estaActivada) {
         game.addVisual(self)
