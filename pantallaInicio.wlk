@@ -4,7 +4,7 @@ import pantallaInstrucciones.*
 
 object inicio {
   const property position = game.at(0,0)
-  const property image = "inicio.jpg"
+  const property image = "ins.jpg"
   var estaActivada = false //variable bandera para evitar que se active la pantalla aun con el juego iniciado
     method mostrarInicio() {
       if(!estaActivada) {

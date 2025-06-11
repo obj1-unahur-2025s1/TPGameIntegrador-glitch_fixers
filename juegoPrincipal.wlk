@@ -5,7 +5,7 @@ import pantallaInstrucciones.*
 
 object juego {
   method iniciarJuego() {
-	game.boardGround("fondoSotano.jpeg")
+	game.boardGround("fondoSotano2.jpeg")
     const pista1 = new PistaOjo(position = game.at(5, 2))
 	const pista2 = new PistaSangre( position = game.at(8,0))
 	const pista3 = new PistaCuchillo(position = game.at(1, 5))

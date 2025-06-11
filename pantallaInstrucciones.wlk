@@ -5,7 +5,7 @@ import juegoPrincipal.*
 
 object instrucciones {
   const property position = game.at(0,0)
-  const property image = "ins.jpg"
+  const property image = "inicio.jpg"
   var estaActivada = false
     method mostrarInstrucciones() {
       if (!estaActivada) {
