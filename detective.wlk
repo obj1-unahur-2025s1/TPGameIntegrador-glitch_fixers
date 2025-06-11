@@ -36,30 +36,68 @@ object detective {
 object lupa {
   method image()= "lupa_1.png"
 
+  var mensajeAMostrar = null
   method encontrar(unaPista) {
     if(unaPista.esPistaPeligrosa()){
       detective.perderUnaVida()
-      return game.say(detective, "¡Debo colocarme los guantes!")
+      //return game.say(detective, "¡Debo colocarme los guantes!")
+      //mensajeAMostrar = mensajeLupa1.text()
+      mensajeAMostrar = new Mensaje(texto = "¡Debo colocarme los guantes!")
     }else{
       unaPista.desaparecer()
       detective.sumarUnaPista()
-      return game.say(detective, "He encontrado una pista")
+      //return game.say(detective, "He encontrado una pista")
+      //mensajeAMostrar = mensajeLupa2.text()
+      mensajeAMostrar = new Mensaje(texto = "He encontrado una pista")
       }
+    return game.say(detective, mensajeAMostrar.text())
   }
 }
 
+class Mensaje {
+  const texto
+  method text() = texto
+}
+
+/*
+object mensajeLupa1 {
+  mensaje
+}
+
+object mensajeLupa2 {
+
+}
+*/
+
 object guantes {
   method image() = "guantes.png"
+  var mensajeAMostrar = null
    method encontrar(unaPista) {
     if( not unaPista.esPistaPeligrosa()){
-      return game.say(detective, "¡Necesito mi lupa!")
+      //return game.say(detective, "¡Necesito mi lupa!")
+      //mensajeAMostrar = mensajeGuante1.text()
+      mensajeAMostrar = new Mensaje(texto = "¡Necesito mi lupa!")
     }else{
       unaPista.desaparecer()
       detective.sumarUnaPista()
-      return game.say(detective, "He encontrado una pista")
+      //return game.say(detective, "He encontrado una pista")
+      //mensajeAMostrar = mensajeGuante2.text()
+      mensajeAMostrar = new Mensaje(texto = "He encontrado una pista")
       }
+    //return game.say(detective, mensajeAMostrar)
+    return game.say(detective, mensajeAMostrar.text())
   }
 }
+
+/*
+object mensajeGuante1 {
+  method text() = "¡Necesito mi lupa!"
+}
+
+object mensajeGuante2 {
+  method text() = "He encontrado una pista"
+}
+*/
 
 object estado {
   method text() = "Pistas encontradas :" + detective.pistasEncontradas().toString() + ".       Tienes "+ detective.vidas().toString() + " vidas."
