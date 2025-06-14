@@ -3,8 +3,8 @@ import detective.*
 import pantallaInstrucciones.*
 
 object inicio {
-  const property position = game.at(3,2)
-  const property image = "ins.jpg"
+  const property position = game.at(0,0)
+  const property image = "inicioPrueba.png"
 
 
   
