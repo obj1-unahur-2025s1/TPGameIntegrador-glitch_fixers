@@ -1,5 +1,7 @@
+import wollok.game.*
+
 class Pista {
-    var esPistaPeligrosa = false
+    const esPistaPeligrosa
     var property position 
     method desaparecer() {
         game.removeVisual(self)
@@ -9,7 +11,7 @@ class Pista {
 }
 
 
-class PistaOjo inherits Pista(esPistaPeligrosa = true) {
+class PistaOjo inherits Pista {
     method image() = "ojo.png"
     
 }
@@ -19,23 +21,42 @@ class PistaSangre inherits Pista{
     
 }
 
-class PistaCuchillo inherits Pista(esPistaPeligrosa = true) {
+class PistaCuchillo inherits Pista {
     method image() = "cuchillo.png"
     
 }
 
-class PistaDinamita inherits Pista(esPistaPeligrosa = true){
+class PistaDinamita inherits Pista{
     method image() = "dinamita.png"
 }
 
-class PistaVeneno inherits Pista(esPistaPeligrosa = true){
+class PistaVeneno inherits Pista{
     method image() = "veneno.png"
 }
 
 class PistaNota inherits Pista {
-    method image() = null // agregrar imagen de una nota
+    method image() = "nota.png"
 }
 
-class PistaHuellaDactilar inherits Pista {
-    method image() = null // agregrar imagen de una nota
+class PistaHuella inherits Pista {
+    method image() = "huella.png"
 }
+
+class PistaFosforos inherits Pista {
+    method image() = "fosforos.png"
+    
+}
+
+class PistaKerosene inherits Pista{
+    method image() = "kerosene.png"
+}
+
+class PistaMolotov inherits Pista{
+    method image() = "molotov.png"
+}
+class PistaNafta inherits Pista{
+    method image() = "bidonNafta.png"
+}
+
+
+

@@ -3,10 +3,14 @@ import wollok.game.*
 import detective.*
 import pantallaInicio.*
 import pantallaInstrucciones.*
+import juegoPrincipal.*
+
+
 program PsychopathsClues {
   game.title("Psychopath's Clues")
   game.height(10)
   game.width(15)
+  game.cellSize(100)
   inicio.mostrarInicio()
   game.start()
 }
