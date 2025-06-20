@@ -13,6 +13,7 @@ object juego {
 		
 		game.say(detective, "Debo usar guantes para las pistas peligrosas")
 		const musicaFondo = game.sound("posible_musica_para_timer.mp3")
+		musicaFondo.shouldLoop(true)
 		musicaFondo.play()
 
 		nivel1.iniciar()
