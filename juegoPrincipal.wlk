@@ -22,7 +22,9 @@ object juego {
 
 }
 
-
+object randomnum{
+	method obtener(num) = 1.randomUpTo(num).truncate(0)
+}
 
 ///LOS NIVELES COMO OBJETOS ///
 
@@ -36,9 +38,10 @@ object nivel1 {
 
 
 	method initialize(){
-		const nivel1Pistas = [new PistaOjo(position = game.at(6, 2), esPistaPeligrosa = true), 
-							new PistaSangre( position = game.at(9,0), esPistaPeligrosa = false), 
-							new PistaCuchillo(position = game.at(1, 6), esPistaPeligrosa = true)]
+		const nivel1Pistas = [
+			new PistaOjo(position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa = true), 
+			new PistaSangre( position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa=false), 
+			new PistaCuchillo(position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa =true)]
 		self.agregarPistas(nivel1Pistas)
 		
 		game.addVisual(self)
