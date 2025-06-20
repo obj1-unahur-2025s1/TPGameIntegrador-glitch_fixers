@@ -2,6 +2,8 @@ import pistas.*
 import detective.*
 import pantallaInicio.*
 import pantallaInstrucciones.*
+import pantallaDerrota.*
+import pantallaGanador.*
 import wollok.game.*
 
 object juego {
@@ -15,9 +17,7 @@ object juego {
 		const musicaFondo = game.sound("posible_musica_para_timer.mp3")
 		musicaFondo.shouldLoop(true)
 		musicaFondo.play()
-
 		nivel1.iniciar()
-	
 	}
 
 }
@@ -43,8 +43,6 @@ object nivel1 {
 		
 		game.addVisual(self)
 		game.addVisual(estado)
-		
-
 	}
 	method agregarPistas(pistas){listaPistas.addAll(pistas)}
 
@@ -54,7 +52,10 @@ object nivel1 {
 		detective.position(game.origin())
 		game.addVisualCharacter(detective)
 	
-		game.onTick(100, "pasarNivel1", {if(detective.pistasEncontradas() == self.cantPistasNivel()) {self.terminar()}})
+		game.onTick(100, "pasarNivel1", {if(detective.pistasEncontradas() == self.cantPistasNivel()) {self.terminar()}
+		                                 if (detective.vidas() < 1) self.mostrarPantallaDerrota()
+		}) //tiene un if y luego otro if porque si no cumple con una condicion no se debe ejecutar la otra , debe preguntar de nuevo
+		   //porque si se usa else directamente el nivel 1 arranca con la pantalla de derrota
 
 	}
 	method terminar(){
@@ -64,6 +65,15 @@ object nivel1 {
 		game.removeTickEvent("pasarNivel1")
 		nivel2.iniciar()
 	}
+
+	method mostrarPantallaDerrota() {
+		estado.reiniciar()
+		game.removeVisual(self)
+		game.removeVisual(detective)
+		game.removeTickEvent("pasarNivel1")
+		derrotaObjet.mostrarPantallaDerrota()
+		game.stop()
+	} 
 }
 
 object nivel2 {
@@ -95,19 +105,32 @@ object nivel2 {
 
 		detective.position(game.origin())
 		game.addVisualCharacter(detective)
-		
-		game.onTick(100, "pasarNivel2", {if(detective.pistasEncontradas() == self.cantPistasNivel()) {self.terminar()}})
+		game.onTick(100, "pasarNivel2", {if(detective.pistasEncontradas() == self.cantPistasNivel()){self.terminar()}
+										 if (detective.vidas() < 1) self.mostrarPantallaDerrota()
+		})
 
 	}
 	method terminar(){
 		estado.reiniciar()
 		game.removeVisual(self)
+		game.removeVisual(detective)
 		game.removeTickEvent("PasarNivel2")
+		victoriaObjet.mostrarPantallaVictoria()
 		game.stop()
-		//nivel3.iniciar()
 	}
+
+	method mostrarPantallaDerrota() {
+		estado.reiniciar()
+		game.removeVisual(self)
+		game.removeVisual(detective)
+		game.removeTickEvent("PasarNivel2")
+		derrotaObjet.mostrarPantallaDerrota()
+		game.stop()
+	} 
 }
 
+
+/*
 object nivel3 {
 	
 	method image() =  "nivel3.png" 
@@ -137,10 +160,9 @@ object nivel3 {
 		detective.position(game.origin())
 		game.addVisualCharacter(detective)
 	
-		game.onTick(100, "pasarNivel", {if(detective.pistasEncontradas() == self.cantPistasNivel()) {self.terminar()}})
-
-	}
-	method terminar(){
+		game.onTick(100, "pasarNivel", {if(detective.pistasEncontradas() == self.cantPistasNivel()) {self.terminar()}})}
+		method terminar(){
 		game.stop()
 	}
 }
+*/
