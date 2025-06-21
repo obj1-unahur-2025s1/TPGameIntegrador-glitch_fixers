@@ -36,8 +36,8 @@ object randomnum{
 	method obtener(num) = 1.randomUpTo(num).truncate(0)
 }
 
-///LOS NIVELES COMO OBJETOS ///
 
+///LOS NIVELES COMO OBJETOS ///
 
 object nivel1 {
 	
@@ -49,9 +49,16 @@ object nivel1 {
 
 	method initialize(){
 		const nivel1Pistas = [
+			new PistaVeneno(position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa = false), 
 			new PistaOjo(position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa = true), 
 			new PistaSangre( position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa=false), 
+			new PistaSangre( position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa=false), 
+			new PistaNota( position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa=false), 
+			new PistaNota( position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa=false), 
+			new PistaHuella( position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa=false), 
+			new PistaCuchillo(position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa =true),
 			new PistaCuchillo(position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa =true)]
+
 		self.agregarPistas(nivel1Pistas)
 		
 		//fondos para el HUD:
@@ -132,9 +139,13 @@ object nivel2 {
 
 	method initialize(){
 		const nivel1Pistas = [new PistaDinamita(position = game.at(10, 4), esPistaPeligrosa = true), 
-							new PistaFosforos( position = game.at(8,0), esPistaPeligrosa = false), 
+							new PistaFosforos( position = game.at(2,6), esPistaPeligrosa = false), 
+							new PistaFosforos( position = game.at(8,0), esPistaPeligrosa = false),
 							new PistaNafta(position = game.at(2, 2), esPistaPeligrosa = false),
-							new PistaKerosene( position = game.at(6,0), esPistaPeligrosa = false), 
+							new PistaNafta(position = game.at(4, 8), esPistaPeligrosa = false),
+							new PistaKerosene( position = game.at(6,0), esPistaPeligrosa = false),
+							new PistaHuella( position = game.at(8,6), esPistaPeligrosa = false), 
+							new PistaMolotov(position = game.at(10, 6), esPistaPeligrosa = true),
 							new PistaMolotov(position = game.at(12, 6), esPistaPeligrosa = true)]
 		self.agregarPistas(nivel1Pistas)
 		
@@ -210,41 +221,3 @@ object nivel2 {
 		game.stop()
 	} 
 }
-
-
-/*
-object nivel3 {
-	
-	method image() =  "nivel3.png" 
-	const listaPistas =[]
-	method cantPistasNivel() = listaPistas.size()
-	var property position = game.at(0,0)
-
-
-	method initialize(){
-		const nivel3Pistas = [new PistaDinamita(position = game.at(5, 4), esPistaPeligrosa = true),
-							new PistaNafta(position = game.at(5, 2), esPistaPeligrosa = false),
-							new PistaFosforos( position = game.at(8,0), esPistaPeligrosa = false),							
-							new PistaMolotov(position = game.at(9,2), esPistaPeligrosa = true),
-							new PistaKerosene(position = game.at(9,2), esPistaPeligrosa = false)]
-		self.agregarPistas(nivel3Pistas)
-		
-	}
-
-	method agregarPistas(pistas){listaPistas.addAll(pistas)}
-
-	method iniciar(){
-	
-		game.addVisual(self)
-		game.addVisual(estado)
-		
-		listaPistas.forEach({p=> game.addVisual(p)})
-		detective.position(game.origin())
-		game.addVisualCharacter(detective)
-	
-		game.onTick(100, "pasarNivel", {if(detective.pistasEncontradas() == self.cantPistasNivel()) {self.terminar()}})}
-		method terminar(){
-		game.stop()
-	}
-}
-*/

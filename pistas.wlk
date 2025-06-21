@@ -35,11 +35,11 @@ class PistaVeneno inherits Pista{
 }
 
 class PistaNota inherits Pista {
-    method image() = "nota_1.png" //cambio de imagen de nota.png a nota_1.png
+    method image() = "nota_1.png"
 }
 
 class PistaHuella inherits Pista {
-    method image() = "huella_dactilar_1.png" //cambio de imagen de huella.png a huella_dactilar_1.png
+    method image() = "huella_dactilar_1.png"
 }
 
 class PistaFosforos inherits Pista {
