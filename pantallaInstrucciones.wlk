@@ -12,8 +12,7 @@ object instrucciones {
         game.addVisual(self)
         estaActivada = true
         keyboard.space().onPressDo({
-        self.cerrarInstrucciones()
-        
+        self.cerrarInstrucciones()   
      })
     }
   }

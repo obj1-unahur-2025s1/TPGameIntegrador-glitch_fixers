@@ -18,9 +18,7 @@ object detective {
   method sumarUnaPista(){ pistasEncontradas += 1}
   method pistasEncontradas() = pistasEncontradas
   method reiniciarPistasEncontradas() {pistasEncontradas = 0}
-
-
-
+  method caerPor(unFondo) {unFondo.restringirEspacio()} //este método, junto al de encontrar(unaPista) generan un error dentro de la terminal, consultando a cada objeto del nivel si es que entiende dicho método, aún no descubro netamente el porque, revisar esto más tarde.
 }
 
 //Apariencias
@@ -68,9 +66,26 @@ object guantes {
 object estado {
   method text() = "Pistas encontradas :" + detective.pistasEncontradas().toString() + ".Tienes "+ detective.vidas().toString() + " vidas."
   const property position = game.at(5, 9)
-  method textColor() = "FF0000FF"
+  //method textColor() = "FF0000FF"
+  method textColor() ="rgb(92, 215, 224)" //modifico el texto de las pistas para que se note más
   method reiniciar(){
     detective.reiniciarPistasEncontradas()
     detective.reiniciarVidas()
     }
+}
+
+/*
+object fondo_estado {
+  const property position = game.at(5, 9)
+  method image() = "posible_fondo_2.png"
+}
+
+*/
+
+class FondoEstado { //clase generadora de fondos para el hud.
+  var property position
+  method image() = "posible_fondo_2.png"
+  method restringirEspacio() {
+    game.schedule(0.01, {detective.position(detective.position().down(1))})
+  }
 }
