@@ -7,8 +7,6 @@ import pantallaGanador.*
 import wollok.game.*
 
 object juego {
-	var property musica = false
-
  	method iniciarJuego() {
 		keyboard.g().onPressDo({detective.ponerseGuantes()})
 		keyboard.l().onPressDo({detective.quitarseGuantes()})
@@ -18,7 +16,6 @@ object juego {
 		game.say(detective, "Debo usar guantes para las pistas peligrosas")
 
 		//musica se activa para que comience en el nivel 1
-		musica = true
 		
 		//iniciar el nivel:
 		nivel1.iniciar()
@@ -38,19 +35,19 @@ object nivel1 {
 	const listaPistas =[]
 	method cantPistasNivel() = listaPistas.size()
 	var property position = game.at(0,0)
-
+	const musicaFondo = game.sound("posible_musica_para_timer.mp3")
 
 	method initialize(){
 		const nivel1Pistas = [
-			new PistaVeneno(position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa = false), 
-			new PistaOjo(position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa = true), 
-			new PistaSangre( position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa=false), 
-			new PistaSangre( position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa=false), 
-			new PistaNota( position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa=false), 
-			new PistaNota( position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa=false), 
-			new PistaHuella( position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa=false), 
-			new PistaCuchillo(position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa =true),
-			new PistaCuchillo(position = game.at(randomnum.obtener(14), randomnum.obtener(9)), esPistaPeligrosa =true)]
+			new PistaVeneno(position = game.at(randomnum.obtener(14), randomnum.obtener(8)), esPistaPeligrosa = false), 
+			new PistaOjo(position = game.at(randomnum.obtener(14), randomnum.obtener(8)), esPistaPeligrosa = true), 
+			new PistaSangre( position = game.at(randomnum.obtener(14), randomnum.obtener(8)), esPistaPeligrosa=false), 
+			new PistaSangre( position = game.at(randomnum.obtener(14), randomnum.obtener(8)), esPistaPeligrosa=false), 
+			new PistaNota( position = game.at(randomnum.obtener(14), randomnum.obtener(8)), esPistaPeligrosa=false), 
+			new PistaNota( position = game.at(randomnum.obtener(14), randomnum.obtener(8)), esPistaPeligrosa=false), 
+			new PistaHuella( position = game.at(randomnum.obtener(14), randomnum.obtener(8)), esPistaPeligrosa=false), 
+			new PistaCuchillo(position = game.at(randomnum.obtener(14), randomnum.obtener(8)), esPistaPeligrosa =true),
+			new PistaCuchillo(position = game.at(randomnum.obtener(14), randomnum.obtener(8)), esPistaPeligrosa =true)]
 
 		self.agregarPistas(nivel1Pistas)
 		
@@ -94,21 +91,6 @@ object nivel1 {
 	method agregarPistas(pistas){listaPistas.addAll(pistas)}
 
 	method iniciar(){
-		//musica inicia en nivel 1 y no para hasta que pierde
-		const musicaFondo = game.sound("posible_musica_para_timer.mp3")
-
-		if(juego.musica()) {  //codigo mejorado sobre la musica
-	  		musicaFondo.shouldLoop(true)
-	  		musicaFondo.play()
-
-			//manejo del sonido (bajar o mutear la música):
-			keyboard.m().onPressDo({musicaFondo.volume(1)})
-  			keyboard.n().onPressDo({musicaFondo.volume(0.5)})
-	    	keyboard.b().onPressDo({musicaFondo.volume(0.25)})
-	    	keyboard.v().onPressDo({musicaFondo.volume(0)})
-		}
-
-
 		listaPistas.forEach({p=> game.addVisual(p)})
 		detective.position(game.origin())
 		game.addVisualCharacter(detective)
@@ -120,6 +102,13 @@ object nivel1 {
 			//tiene un if y luego otro if porque si no cumple con una condicion no se debe ejecutar la otra , debe preguntar de nuevo
 		   //porque si se usa else directamente el nivel 1 arranca con la pantalla de derrota
 		   //Se mejoro :D
+
+		musicaFondo.shouldLoop(true)
+	  	musicaFondo.play()
+		keyboard.m().onPressDo({musicaFondo.volume(1)})
+  		keyboard.n().onPressDo({musicaFondo.volume(0.5)})
+	    keyboard.b().onPressDo({musicaFondo.volume(0.25)})
+	    keyboard.v().onPressDo({musicaFondo.volume(0)})
 
 	}
 	method terminar(){
@@ -137,15 +126,16 @@ object nivel1 {
 		game.removeVisual(detective) 
 		game.removeTickEvent("perder") //division del evento original a dos eventos por separado
 		game.removeTickEvent("pasarNivel1")
-		juego.musica(false)
-		derrotaObjet.mostrarPantallaDerrota()
-		//game.stop() descomentar este comando para que funcione, lo comente porque estaba probando para que vuelva
+		musicaFondo.stop()
+		derrotaObject.mostrarPantallaDerrota()
+		//game.stop() 
+		//descomentar este comando para que funcione, lo comente porque estaba probando para que vuelva
 		//a la pantalla de inicio una vez pierde, funciona bien pero la musica falla.
 	}
 }
 
 object nivel2 {
-	
+	const musicaFondo = game.sound("posible_musica_para_timer.mp3")
 	method image() =  "nivel2.jpeg"
 	const listaPistas =[]
 	method cantPistasNivel() = listaPistas.size()
@@ -216,6 +206,13 @@ object nivel2 {
 	
 		game.onTick(100, "perder", {if (detective.vidas() < 1) self.mostrarPantallaDerrota()})
 
+		musicaFondo.shouldLoop(true)
+	  	musicaFondo.play()
+		keyboard.m().onPressDo({musicaFondo.volume(1)})
+  		keyboard.n().onPressDo({musicaFondo.volume(0.5)})
+	    keyboard.b().onPressDo({musicaFondo.volume(0.25)})
+	    keyboard.v().onPressDo({musicaFondo.volume(0)})
+
 	}
 	method terminar(){
 		estado.reiniciar()
@@ -234,7 +231,8 @@ object nivel2 {
 		game.removeVisual(detective)
 		game.removeTickEvent("perder")
 		game.removeTickEvent("pasarNivel2")
-		derrotaObjet.mostrarPantallaDerrota()
+		musicaFondo.stop()
+		derrotaObject.mostrarPantallaDerrota()
 		game.stop()
 	} 
 }

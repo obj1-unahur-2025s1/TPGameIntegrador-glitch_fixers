@@ -1,0 +1,7 @@
+import pistas.*
+import detective.*
+import pantallaInicio.*
+import pantallaInstrucciones.*
+import pantallaDerrota.*
+import pantallaGanador.*
+import wollok.game.*
