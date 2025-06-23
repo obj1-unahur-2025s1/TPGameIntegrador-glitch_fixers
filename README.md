@@ -14,7 +14,32 @@
 
 ## Reglas de Juego / Instrucciones
 
-El objetivo del juego es hacer de detective y recoger todas las pistas antes que se acabe el tiempo. Para moverse a través de la escena del crimen el jugador podrá usar las flechitas. Como detective el jugador también puede utilizar los guantes (presionando la tecla "g") o utilizar la lupa (presionando la tecla "l"). Existen 2 tipos de pistas: las pistas comunes las cuales podrán ser recogidas con la lupa y las pistas peligrosas, para las que se necesitaran los guantes. Si se intenta recoger una pista peligrosa sin los guantes o una común sin la lupa, se restará una vida. El jugador cuenta con 3 vidas por nivel.
+### Objetivo del Juego:
+El objetivo del juego es hacer de detective y recoger todas las pistas esparcidas por la escena del crímen para así cerrar dicho caso y pasar al siguiente.
+
+### Reglas Generales:
+- El jugador cuenta con 3 vidas por nivel.
+- Existen 2 tipos de pistas: 
+    - Pistas Comunes: Pueden ser recogidas con la lupa. Estas son:
+        - Sangre
+        - Veneno
+        - Nota
+        - Huella
+        - Fosforos
+        - Kerosene
+        - Nafta
+    - Pistas peligrosas: Para recolectar las mismas se necesitan guantes. Estas son:
+        - Ojo
+        - Dinamita
+        - Molotov
+        - Cuchillo
+- Aclaración: Si se intenta recoger una pista peligrosa sin los guantes, se restará una vida; más si se intenta recoger una pista común con los guantes puestos, no se le restará vida al jugador, pero sí será incapaz de agarrar dicha pista con el guante puesto.
+
+### Controles:
+- Para moverse a través de la escena del crimen el jugador podrá usar las flechitas (arriba, abajo, izquierda y derecha). 
+- Como cualquier buen detective el jugador también puede utilizar los guantes (presionando la tecla "G") o utilizar la lupa (presionando la tecla "L"). 
+- Controles secretos: Con "V" podes poner la música al 0%, con "B" pones la música al 25%, con "N" al 50%, y con "M" al 100% de nuevo, en caso de que te canses de escucharla/quieras escucharla de nuevo.
+
 
 ## Otros
 

@@ -33,9 +33,10 @@ object randomnum{
 object nivel1 {
 	method image() =  "nivel1.jpeg" 
 	const listaPistas =[]
+	const listaTilesDeFondo = []
 	method cantPistasNivel() = listaPistas.size()
 	var property position = game.at(0,0)
-	const musicaFondo = game.sound("posible_musica_para_timer.mp3")
+	const musicaFondo = game.sound("musica_para_timer.mp3")
 
 	method initialize(){
 		const nivel1Pistas = [
@@ -52,6 +53,7 @@ object nivel1 {
 		self.agregarPistas(nivel1Pistas)
 		
 		//fondos para el HUD:
+		/*
 		const fondo_0 = new FondoEstado(position = game.at(0,9))
 		const fondo_1 = new FondoEstado(position = game.at(1,9))
 		const fondo_2 = new FondoEstado(position = game.at(2,9))
@@ -67,8 +69,10 @@ object nivel1 {
 		const fondo_12 = new FondoEstado(position = game.at(12,9))
 		const fondo_13 = new FondoEstado(position = game.at(13,9))
 		const fondo_14 = new FondoEstado(position = game.at(14,9))
+		*/
 		//agregado de dichos fondos:
 		game.addVisual(self)
+		/*
 		game.addVisual(fondo_0)
 		game.addVisual(fondo_1)
 		game.addVisual(fondo_2)
@@ -84,13 +88,42 @@ object nivel1 {
 		game.addVisual(fondo_12)
 		game.addVisual(fondo_13)
 		game.addVisual(fondo_14)
-		game.addVisual(estado)
+		*/
+
+		const listaTilesDeFondoNivel1 = [
+			new FondoEstado(position = game.at(0,9)) ,
+			new FondoEstado(position = game.at(1,9)) ,
+			new FondoEstado(position = game.at(2,9)) ,
+			new FondoEstado(position = game.at(3,9)) ,
+			new FondoEstado(position = game.at(4,9)) ,
+			new FondoEstado(position = game.at(5,9)) ,
+			new FondoEstado(position = game.at(6,9)) ,
+			new FondoEstado(position = game.at(7,9)) ,
+			new FondoEstado(position = game.at(8,9)) ,
+			new FondoEstado(position = game.at(9,9)) ,
+			new FondoEstado(position = game.at(10,9)) ,
+			new FondoEstado(position = game.at(11,9)) ,
+			new FondoEstado(position = game.at(12,9)) ,
+			new FondoEstado(position = game.at(13,9)) ,
+			new FondoEstado(position = game.at(14,9))
+		]
+		self.agregarFondo(listaTilesDeFondoNivel1)
+
+		//game.addVisual(estado)
 		
 
 	}
 	method agregarPistas(pistas){listaPistas.addAll(pistas)}
-
+	method agregarFondo(tilesDeFondo) { //método que agrega todos los tiles del fondo de forma más sencilla
+		listaTilesDeFondo.addAll(tilesDeFondo)
+	}
 	method iniciar(){
+		listaTilesDeFondo.forEach({tile => game.addVisual(tile)}) //ahora cada tile se agrega en el fondo de una manera más sencilla!
+		//agrego los estados por separado:
+		game.addVisual(estado)
+		game.addVisual(estado2)
+		game.addVisual(estado3)
+
 		listaPistas.forEach({p=> game.addVisual(p)})
 		detective.position(game.origin())
 		game.addVisualCharacter(detective)
@@ -113,20 +146,34 @@ object nivel1 {
 	}
 	method terminar(){
 		estado.reiniciar()
+		estado2.reiniciar()
+		estado3.reiniciar()
 		game.removeVisual(self)
 		game.removeVisual(detective)
 		game.removeTickEvent("pasarNivel1") //division del evento original a dos eventos por separado
 		game.removeTickEvent("perder")
+		game.removeVisual(estado)
+		game.removeVisual(estado2)
+		game.removeVisual(estado3)
+		musicaFondo.stop() // se detiene la música fondo del nivel 1 ya que se inicia otra vez en el nivel 2.
+		listaTilesDeFondo.forEach({tile => game.removeVisual(tile)})
 		nivel2.iniciar()
+		detective.pasarDeNivel() //al pasar al nivel 2, el detective "reinicia" su cantidad de pistas por la cantidad de pistas que tenga el nivel 2 luego de ser iniciado.
 	}
 
 	method mostrarPantallaDerrota() {
 		estado.reiniciar()
+		estado2.reiniciar()
+		estado3.reiniciar()
 		game.removeVisual(self)
 		game.removeVisual(detective) 
 		game.removeTickEvent("perder") //division del evento original a dos eventos por separado
 		game.removeTickEvent("pasarNivel1")
 		musicaFondo.stop()
+		game.removeVisual(estado)
+		game.removeVisual(estado2)
+		game.removeVisual(estado3)
+		listaTilesDeFondo.forEach({tile => game.removeVisual(tile)})
 		derrotaObject.mostrarPantallaDerrota()
 		//game.stop() 
 		//descomentar este comando para que funcione, lo comente porque estaba probando para que vuelva
@@ -135,9 +182,10 @@ object nivel1 {
 }
 
 object nivel2 {
-	const musicaFondo = game.sound("posible_musica_para_timer.mp3")
+	const musicaFondo = game.sound("musica_para_timer.mp3")
 	method image() =  "nivel2.jpeg"
 	const listaPistas =[]
+	const listaTilesDeFondo = []
 	method cantPistasNivel() = listaPistas.size()
 	var property position = game.at(0,0)
 
@@ -153,15 +201,45 @@ object nivel2 {
 							new PistaMolotov(position = game.at(12, 6), esPistaPeligrosa = true)]
 		self.agregarPistas(nivel1Pistas)
 		
+		const listaTilesDeFondoNivel2 = [
+			new FondoEstado(position = game.at(0,9)) ,
+			new FondoEstado(position = game.at(1,9)) ,
+			new FondoEstado(position = game.at(2,9)) ,
+			new FondoEstado(position = game.at(3,9)) ,
+			new FondoEstado(position = game.at(4,9)) ,
+			new FondoEstado(position = game.at(5,9)) ,
+			new FondoEstado(position = game.at(6,9)) ,
+			new FondoEstado(position = game.at(7,9)) ,
+			new FondoEstado(position = game.at(8,9)) ,
+			new FondoEstado(position = game.at(9,9)) ,
+			new FondoEstado(position = game.at(10,9)) ,
+			new FondoEstado(position = game.at(11,9)) ,
+			new FondoEstado(position = game.at(12,9)) ,
+			new FondoEstado(position = game.at(13,9)) ,
+			new FondoEstado(position = game.at(14,9))
+		]
+		self.agregarFondo(listaTilesDeFondoNivel2)
 	}
 
 
 	method agregarPistas(pistas){listaPistas.addAll(pistas)}
-	method iniciar(){
 
+	method agregarFondo(tilesDeFondo) { //método que agrega todos los tiles del fondo de forma más sencilla
+		listaTilesDeFondo.addAll(tilesDeFondo)
+	}
+	method iniciar(){
+		
 		game.addVisual(self)
 		
+		listaTilesDeFondo.forEach({tile => game.addVisual(tile)}) //agrega todos los tiles de la lista, en vez de tener que agregarlo 1 por 1.
+		//game.removeVisual(estado)
+		//agrego los estados por separado:
+		game.addVisual(estado)
+		game.addVisual(estado2)
+		game.addVisual(estado3)
+
 		//creo de nuevo los fondos:
+		/*
 		const fondo_0 = new FondoEstado(position = game.at(0,9))
 		const fondo_1 = new FondoEstado(position = game.at(1,9))
 		const fondo_2 = new FondoEstado(position = game.at(2,9))
@@ -194,9 +272,10 @@ object nivel2 {
 		game.addVisual(fondo_12)
 		game.addVisual(fondo_13)
 		game.addVisual(fondo_14)
-		game.removeVisual(estado)
-		game.addVisual(estado)
+		*/
 		//nota: he notado un error ya que, de alguna forma, los fondos del hud del nivel 1 siguen afectando al nivel 2, así q cuando el pj se acerca a los de este nivel, se cae y baja 2 espacios en vez de 1. Quizás agregarlos como una lista o objetos planteados dentro de otro archivo sea la solución.
+		//este error ya fue corregido.
+
 		listaPistas.forEach({p=> game.addVisual(p)})
 
 		detective.position(game.origin())
@@ -216,22 +295,33 @@ object nivel2 {
 	}
 	method terminar(){
 		estado.reiniciar()
+		estado2.reiniciar()
+		estado3.reiniciar()
 		game.removeVisual(self)
 		game.removeVisual(detective)
 		game.removeVisual(estado)
+		game.removeVisual(estado2)
+		game.removeVisual(estado3)
 		game.removeTickEvent("pasarNivel2")
 		game.removeTickEvent("perder")
+		listaTilesDeFondo.forEach({tile => game.removeVisual(tile)})
 		victoriaObjet.mostrarPantallaVictoria()
 		game.stop()
 	}
 
 	method mostrarPantallaDerrota() {
 		estado.reiniciar()
+		estado2.reiniciar()
+		estado3.reiniciar()
 		game.removeVisual(self)
 		game.removeVisual(detective)
 		game.removeTickEvent("perder")
 		game.removeTickEvent("pasarNivel2")
 		musicaFondo.stop()
+		game.removeVisual(estado)
+		game.removeVisual(estado2)
+		game.removeVisual(estado3)
+		listaTilesDeFondo.forEach({tile => game.removeVisual(tile)})
 		derrotaObject.mostrarPantallaDerrota()
 		game.stop()
 	} 
