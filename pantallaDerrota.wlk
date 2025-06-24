@@ -10,12 +10,5 @@ object derrotaObject {
   
   method mostrarPantallaDerrota() {
     game.addVisual(self)
-    keyboard.z().onPressDo(
-      { 
-        game.removeVisual(self)
-        juego.iniciarJuego()
-        game.start()
-      }
-    ) //prueba de tecla para ir al menu inicial
-  }
+  } ////se borra la tecla para volver al inicio porque no anda, no hay solución////
 }
