@@ -6,7 +6,7 @@ import pantallaInicio.*
 
 object derrotaObject {
   const property position = game.at(0, 0)
-  const property image = "derrota.jpg"
+  const property image = "pantalla_derrota_final.png"
   
   method mostrarPantallaDerrota() {
     game.addVisual(self)

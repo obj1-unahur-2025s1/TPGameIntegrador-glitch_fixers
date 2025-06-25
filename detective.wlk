@@ -30,6 +30,7 @@ object detective {
   method reiniciarPistasRestantes() {pistasRestantes = nivel2.cantPistasNivel()} //no se reiniciaba bien al sólo "pasarDeNivel", pero al igualarlo a la cantidad de pistas del nivel 2, entonces si se reinició correctamente
   //method pistasRestantes(unNivel) = unNivel.cantPistasNivel()
   method pistasRestantes() = pistasRestantes
+  method nivelActual() = nivelActual //auxiliar para testeos
 }
 
 //Apariencias
