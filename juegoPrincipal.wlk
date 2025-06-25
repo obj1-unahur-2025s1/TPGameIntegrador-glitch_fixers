@@ -16,7 +16,6 @@ object juego {
 		game.say(detective, "Debo usar guantes para las pistas peligrosas")
 
 		//musica se activa para que comience en el nivel 1
-		
 		//iniciar el nivel:
 		nivel1.iniciar()
 	}
@@ -155,6 +154,7 @@ object nivel2 {
 	method cantPistasNivel() = listaPistas.size()
 	var property position = game.at(0,0)
 	const musicaFondo = game.sound("musica_para_timer_1.mp3")
+	
 
 	method initialize(){
 		musicaFondo.volume(0.3)
@@ -196,9 +196,8 @@ object nivel2 {
 		listaTilesDeFondo.addAll(tilesDeFondo)
 	}
 	method iniciar(){
-		
+		musicaFondo.play()
 		game.addVisual(self)
-		
 		listaTilesDeFondo.forEach({tile => game.addVisual(tile)}) //agrega todos los tiles de la lista, en vez de tener que agregarlo 1 por 1.
 		//game.removeVisual(estado)
 		//agrego los estados por separado:
@@ -215,32 +214,35 @@ object nivel2 {
 		game.addVisualCharacter(detective)
 		
 		game.onTick(100, "pasarNivel2", {if(detective.pistasEncontradas() == self.cantPistasNivel()) {self.terminar()}})
-	
+		game.onTick(100, "cortarMusica", {if (detective.vidas() < 1) self.cortarMusica()})
 		game.onTick(100, "perder", {if (detective.vidas() < 1) self.mostrarPantallaDerrota()})
-
-		musicaFondo.shouldLoop(true)
-	  	musicaFondo.play()
+	  	
 		keyboard.m().onPressDo({musicaFondo.volume(1)})
   		keyboard.n().onPressDo({musicaFondo.volume(0.5)})
 	    keyboard.b().onPressDo({musicaFondo.volume(0.25)})
 	    keyboard.v().onPressDo({musicaFondo.volume(0)})
 
 	}
+
+	method cortarMusica() {
+		musicaFondo.stop()
+	} 
+
 	method terminar(){
 		estado.reiniciar()
 		estado2.reiniciar()
 		estado3.reiniciar()
 		game.removeVisual(self)
 		game.removeVisual(detective)
-		game.removeTickEvent("pasarNivel2")
-		game.removeTickEvent("perder")
 		game.removeVisual(estado)
 		game.removeVisual(estado2)
 		game.removeVisual(estado3)
-		musicaFondo.stop()
+		game.removeTickEvent("perder") //division del evento original a dos eventos por separado
+		game.removeTickEvent("pasarNivel2")
+		game.removeTickEvent("cortarMusica")
 		listaTilesDeFondo.forEach({tile => game.removeVisual(tile)})
+		musicaFondo.stop()
 		victoriaObjet.mostrarPantallaVictoria()
-		game.stop()
 	}
 
 	method mostrarPantallaDerrota() {
@@ -249,14 +251,14 @@ object nivel2 {
 		estado3.reiniciar()
 		game.removeVisual(self)
 		game.removeVisual(detective)
-		game.removeTickEvent("perder")
-		game.removeTickEvent("pasarNivel2")
 		game.removeVisual(estado)
 		game.removeVisual(estado2)
 		game.removeVisual(estado3)
+		game.removeTickEvent("perder") //division del evento original a dos eventos por separado
+		game.removeTickEvent("pasarNivel2")
+		game.removeTickEvent("cortarMusica")
 		musicaFondo.stop() //se intenta arreglar el bug poniendo esto pero tampoco anda
 		listaTilesDeFondo.forEach({tile => game.removeVisual(tile)})
 		derrotaObject.mostrarPantallaDerrota()
-		game.stop()
-	} 
+	} 
 }
