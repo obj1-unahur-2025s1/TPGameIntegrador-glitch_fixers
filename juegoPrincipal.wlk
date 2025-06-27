@@ -10,7 +10,7 @@ object juego {
  	method iniciarJuego() {
 		keyboard.g().onPressDo({detective.ponerseGuantes()})
 		keyboard.l().onPressDo({detective.quitarseGuantes()})
-		game.onCollideDo(detective, {pista => detective.encontrar(pista)})
+		game.onCollideDo(detective, {pista => detective.encontrar(pista)}) //usar polimorfismo, hacer que el espacio sepa responder a encontrar una pista
 		game.onCollideDo(detective, {unFondoEstado => detective.caerPor(unFondoEstado)})
 
 		game.say(detective, "Debo usar guantes para las pistas peligrosas")
@@ -218,7 +218,7 @@ object nivel2 {
 		game.onTick(100, "perder", {if (detective.vidas() < 1) self.mostrarPantallaDerrota()})
 	  	
 		keyboard.m().onPressDo({musicaFondo.volume(1)})
-  		keyboard.n().onPressDo({musicaFondo.volume(0.5)})
+  		keyboard.n().onPressDo({musicaFondo.volume(0.5)}) //agregarlos al juego, pero en este caso como subir/bajar volumen
 	    keyboard.b().onPressDo({musicaFondo.volume(0.25)})
 	    keyboard.v().onPressDo({musicaFondo.volume(0)})
 

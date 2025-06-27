@@ -11,7 +11,7 @@ class Pista {
 }
 
 
-class PistaOjo inherits Pista {
+class PistaOjo inherits Pista { //no son subclases, se debe instanciar dentro de Juego principal.
     method image() = "ojo.png"
     
 }

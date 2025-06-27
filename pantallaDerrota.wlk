@@ -7,7 +7,7 @@ import pantallaInicio.*
 object derrotaObject {
   const sonidoDerrota = game.sound("sfx-defeat6.mp3")
   const property position = game.at(0, 0)
-  const property image = "pantalla_derrota_final.png"
+  const property image = "pantalla_derrota_final_1.png"
   
   method mostrarPantallaDerrota() {
     sonidoDerrota.play()
