@@ -9,8 +9,17 @@
 - Camila Montalbano.
 
 ## Capturas
+### Versión Inicial:
+#### Nivel 1:
+![Captura del juego nivel 1](./assets/capturaJuego.png) 
+#### nivel 2:
+![Captura del juego nivel 2](./assets/capturaJuego2.png)
 
-![Captura del juego nivel 1](./assets/capturaJuego.png) ![Captura del juego nivel 2](./assets/capturaJuego2.png)
+### Nueva Versión:
+#### Nivel 1:
+![Captura del juego nivel 1](./assets/capturaJuego.png) 
+#### nivel 2:
+![Captura del juego nivel 2](./assets/capturaJuego2.png)
 
 ## Reglas de Juego / Instrucciones
 
@@ -40,7 +49,10 @@ El objetivo del juego es hacer de detective y recoger todas las pistas esparcida
 ### Controles:
 - Para moverse a través de la escena del crimen el jugador podrá usar las flechitas (arriba, abajo, izquierda y derecha). 
 - Como cualquier buen detective el jugador también podrás utilizar los guantes (presionando la tecla "G") o utilizar la lupa (presionando la tecla "L"). 
-- Controles secretos: Con "V" serás capaz de poner la música al 0%, con "B" la música al 25%, con "N" al 50%, y con "M" al 100% de nuevo, en caso de que te canses de escucharla/quieras escucharla de nuevo.
+- Para subir la música de fondo, apretá la tecla "M".
+- Para bajar la música de fondo, apretá la tecla "N".
+- Para reiniciar el juego desde la pantalla de victoria, tenés que apretar la tecla "R".
+- Para reiniciar el juego dentro de la pantalla de derrota, apretá la tecla "T".
 
 
 ## Otros

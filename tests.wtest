@@ -161,3 +161,238 @@
 //       assert.equals(nivel2, detective.nivelActual())
 //     }
 // }
+
+import pistas.*
+import detective.*
+import pantallas.*
+import juego.*
+import wollok.game.*
+import niveles.*
+
+describe "Testeos más relevantes sobre las características generales del Detective: " {
+
+    //Se inicializa borrando cualquier objeto residual y agregando el que nos importa (el detective en este caso):
+    method initialize() {
+        game.clear() 
+        game.addVisual(detective)
+    }
+
+
+    //IMÁGENES:
+    test "el detective tiene inicialmente la imagen de la lupa" {
+        assert.equals("lupa.png", detective.image())
+    }
+    test "al ponerse los guantes, el detective cambia de apariencia a la de la imagen de la lupa." {
+        detective.ponerseGuantes()
+        assert.equals("guante.png", detective.image())
+    }
+
+
+    //POSICIÓN INICIAL:
+    test "la posición inicial del detective es la posición (0,0)" {
+        assert.equals(game.origin(), detective.position())
+    }
+
+
+    //VIDAS:
+    test "El detective tiene 3 vidas inicialmente:" {
+        assert.equals(3, detective.vidas())
+    }
+    test "El detective es capaz de perder vidas:" {
+        detective.perderUnaVida()
+        assert.equals(2, detective.vidas())
+    }
+    test "El detective no puede bajar a menos de 0 vidas:" {
+        detective.perderUnaVida()//vidas = 2
+        detective.perderUnaVida()//vidas = 1
+        detective.perderUnaVida()//vidas = 0
+        assert.equals(0, detective.vidas())
+    }
+
+    //NIVEL INICIAL:
+    test "Al iniciar el juego, el nivel en donde se encuetra el detective es el 1:" {
+      assert.equals(nivel1, detective.nivelActual())
+    }
+
+    //NIVEL FINAL:
+    test "Al superar el nivel 1, el detective se encuentra en el nivel 2:" {
+        detective.pasarDeNivel()
+        assert.equals(nivel2, detective.nivelActual())
+    }
+
+    //CONTADORES DE PISTAS:
+    //PISTAS ENCONTRADAS:
+    test "La cantidad de pistas encontradas inicialmente es 0." {
+      assert.equals(0, detective.pistasEncontradas())
+    }
+    
+    test "El detective es capaz de sumar satisfactoriamente la cantidad de pistas recolectadas:" {
+        detective.sumarUnaPista()
+        assert.equals(1, detective.pistasEncontradas())
+    }
+    
+    //PISTAS RESTANTES:
+    test "La cantidad de pistas restantes inicialmente son 7:" {
+      assert.equals(7, detective.pistasRestantes())
+    }
+    
+    test "Al encontrar una pista, el detective es capaz, además de sumar a su contador de pistas encontradas, restar su cantidad de pistas por encontrar:" {
+        detective.sumarUnaPista()
+        assert.equals(6, detective.pistasRestantes())
+    }
+
+    test "El detective es incapaz de tener pistas restantes negativas:" {
+        detective.sumarUnaPista()
+        detective.sumarUnaPista()
+        detective.sumarUnaPista()
+        detective.sumarUnaPista()
+        detective.sumarUnaPista()
+        detective.sumarUnaPista()
+        detective.sumarUnaPista()
+        assert.equals(0, detective.pistasRestantes())
+    }
+    
+    
+}
+
+describe "Testeos del detective interactuando con las pistas:" {
+    // Voy a setear algunos objetos con sus respectivas imagenes, y a otros les voy a dar un valor random gracias al initialize.
+    
+    //PISTAS:
+    
+    //PISTAS COMUNES:
+    //CON IMAGEN DEFAULT:
+    const pistaEjemplo1 = new Pista(position = game.at(0, 1), image = "fosforos.png", tipoPista = noPeligrosa, imagenes = ["fosforos.png", "nafta.png", "kerosene.png", "huella.png"])
+    //SIN IMAGEN DEFAULT (IMAGEN SEMI-RANDOM/NOISE):
+    const pistaEjemplo2 = new Pista(position = game.at(0, 2), tipoPista = noPeligrosa, imagenes = ["fosforos.png", "nafta.png", "kerosene.png", "huella.png"])
+    const pistaEjemplo3 = new Pista(position = game.at(0, 3), tipoPista = noPeligrosa, imagenes = ["fosforos.png", "nafta.png", "kerosene.png", "huella.png"])
+    const pistaEjemplo4 = new Pista(position = game.at(0, 4), tipoPista = noPeligrosa, imagenes = ["fosforos.png", "nafta.png", "kerosene.png", "huella.png"])
+    
+    //PISTAS PELIGROSAS:
+    //CON IMAGEN DEFAULT:
+    const pistaEjemplo5 = new Pista(position = game.at(0, 5), tipoPista = peligrosa, image = "cuchillo.png", imagenes = ["cuchillo.png", "veneno.png"])
+    //SIN IMAGEN DEFAULT (IMAGEN SEMI-RANDOM/NOISE):
+    const pistaEjemplo6 = new Pista(position = game.at(0, 6), tipoPista = peligrosa, imagenes = ["cuchillo.png", "veneno.png"])
+    const pistaEjemplo7 = new Pista(position = game.at(0, 7), tipoPista = peligrosa, imagenes = ["cuchillo.png", "veneno.png"])
+    
+    //LISTA DE TODAS LAS PISTAS:
+    const pistasEjemploConImgRandom = [pistaEjemplo2, pistaEjemplo3, pistaEjemplo4, pistaEjemplo6, pistaEjemplo7]
+
+    method initialize() {
+        game.clear()
+        pistasEjemploConImgRandom.forEach({p => p.iniciar()})
+        game.addVisual(detective)
+    }
+
+
+    //IMAGENES DE LAS PISTAS CON IMAGEN DEFAULT:
+    
+    //PISTAS COMUNES:
+    test "la pista 1 (pista común) tiene de imagen a los fosforos" {
+        assert.equals("fosforos.png", pistaEjemplo1.image())
+    }
+
+    //PISTAS PELIGROSAS:
+    test "la pista 5 (pista peligrosa) tiene de imagen al cuchillo" {
+        assert.equals("cuchillo.png", pistaEjemplo5.image())
+    }
+
+
+    //CONTADOR DE PISTAS (PISTAS ENCONTRADAS Y RESTANTES):
+    
+    //PISTAS ENCONTRADAS:
+    //CON LUPA:
+    test "al encontrar una pista común con la lupa, el detective será capaz de recolectarla:" {
+        detective.colisionar(pistaEjemplo1)
+        assert.equals(1, detective.pistasEncontradas())
+    }
+    test "al encontrar una pista la cual es peligrosa con la lupa, el detective no las suma dentro de su contador de pistas encontradas:" {
+       detective.colisionar(pistaEjemplo5)
+       assert.equals(0, detective.pistasEncontradas())
+    }
+
+    //CON GUANTES:
+    test "al encontrar una pista común con los guantes, el detective será incapaz de recolectarlo:" {
+         detective.ponerseGuantes()
+         detective.colisionar(pistaEjemplo1)
+         assert.equals(0, detective.pistasEncontradas())
+    }
+    test "al encontrar una pista la cual es peligrosa con los guantes puestos, el detective es capaz de agarrarla y sumarla a su contador de pistas encontradas:" {
+        detective.ponerseGuantes()
+        detective.colisionar(pistaEjemplo5)
+        assert.equals(1, detective.pistasEncontradas())
+    }
+    
+    //PISTAS RESTANTES:
+    //CON LUPA:
+    test "al encontrar una pista común con la lupa, el detective será capaz de recolectarla, disminuyendo así su cantidad de pistas restantes:" { 
+        detective.colisionar(pistaEjemplo1)
+        assert.equals(6, detective.pistasRestantes())
+    }
+    test "al encontrar una pista la cual es peligrosa con la lupa, el detective no podrá recolectarla, y seguiran siendo 9 las pistas restantes por nivel:" {
+       detective.colisionar(pistaEjemplo5)
+       assert.equals(7, detective.pistasRestantes())
+    }
+
+    //CON GUANTES:
+    test "al encontrar una pista común con los guantes, el detective será incapaz de recolectarlo, dejando la cantidad de pistas restantes en su valor original (9):" {
+         detective.ponerseGuantes()
+         detective.colisionar(pistaEjemplo1)
+         assert.equals(7, detective.pistasRestantes())
+    }
+     test "al encontrar una pista la cual es peligrosa con los guantes puestos, el detective es capaz de agarrarla y sumarla a su contador de pistas encontradas, haciendo que el contador de pistas a encontrar disminuya" {
+        detective.ponerseGuantes()
+        detective.colisionar(pistaEjemplo5)
+        assert.equals(6, detective.pistasRestantes())
+    }
+    
+
+    //CONTADOR DE VIDAS AL ENCONTRAR UNA PISTA:
+    
+    //CON LUPA:
+    test "al encontrar una pista comun con la lupa, el detective, además de sumarla a su contador, no perderá una vida:" {
+       detective.colisionar(pistaEjemplo1)
+       assert.equals(3, detective.vidas())
+    }
+    test "al encontrar una pista la cual es peligrosa con la lupa, el detective, además de no sumarla a su contador, perderá una vida:" {
+       detective.colisionar(pistaEjemplo5)
+       assert.equals(2, detective.vidas())
+    }
+     
+    //CON GUANTES:
+    test "al encontrar una pista la cual NO es peligrosa con los guantes, el detective, además de no sumarla a su contador, perderá una vida:" {
+       detective.ponerseGuantes()
+       detective.colisionar(pistaEjemplo1)
+       assert.equals(3, detective.vidas())
+    }
+    test "al encontrar una pista la cual es peligrosa con los guantes, el detective, además de sumarla a su contador, seguira con sus 3 vidas:" {
+       detective.ponerseGuantes()
+       detective.colisionar(pistaEjemplo5)
+       assert.equals(3, detective.vidas())
+    }
+
+     //SUPERAR UN NIVEL:
+    test "Al encontrar todas las pistas esparcidas en el nivel, las pistas restantes quedan en 0, para luego pasar al siguiente nivel:"{
+       detective.colisionar(pistaEjemplo1)
+       detective.colisionar(pistaEjemplo2)
+       detective.colisionar(pistaEjemplo3)
+       detective.colisionar(pistaEjemplo4)
+       detective.ponerseGuantes()
+       detective.colisionar(pistaEjemplo5)
+       detective.colisionar(pistaEjemplo6)
+       detective.colisionar(pistaEjemplo7)
+       assert.equals(0, detective.pistasRestantes())
+    }
+    test "Al encontrar todas las pistas esparcidas en el nivel, el detective supera dicho nivel y pasa al siguiente"{
+       detective.colisionar(pistaEjemplo1)
+       detective.colisionar(pistaEjemplo2)
+       detective.colisionar(pistaEjemplo3)
+       detective.colisionar(pistaEjemplo4)
+       detective.ponerseGuantes()
+       detective.colisionar(pistaEjemplo5)
+       detective.colisionar(pistaEjemplo6)
+       detective.colisionar(pistaEjemplo7)
+       detective.pasarDeNivel() //método bandera que actualiza correctamente el nivel actual, ya que no se están usando los métodos que tienen los niveles en este caso.
+       assert.equals(nivel2, detective.nivelActual())
+    }
+}
