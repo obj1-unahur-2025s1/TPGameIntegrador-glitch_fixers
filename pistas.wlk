@@ -1,62 +1,55 @@
 import wollok.game.*
+import detective.*
 
 class Pista {
-    const esPistaPeligrosa
-    var property position 
-    method desaparecer() {
-        game.removeVisual(self)
-    }
-    method esPistaPeligrosa() = esPistaPeligrosa 
-    
+	var property position
+	var property image = ""
+	const tipoPista
+	const imagenes
+	
+	method elegirImagen() {
+		image = imagenes.randomized().head()
+	}
+	
+	method desaparecer() {
+		game.removeVisual(self)
+	}
+	
+	method colision() {
+		tipoPista.reaccionar(self)
+	}
+	
+	method iniciar() {
+		self.elegirImagen()
+		game.addVisual(self)
+	}
 }
 
-
-class PistaOjo inherits Pista { //no son subclases, se debe instanciar dentro de Juego principal.
-    method image() = "ojo.png"
-    
+object peligrosa {
+	const aparienciaNecesaria = guantes
+	
+	method reaccionar(pista) {
+		if (detective.aparienciaActual() == aparienciaNecesaria) {
+			pista.desaparecer()
+			detective.sumarUnaPista()
+			game.say(detective, "Pista encontrada!")
+		} else {
+			detective.perderUnaVida()
+			game.say(detective, "Debes colocarte los guantes!")
+		}
+	}
 }
 
-class PistaSangre inherits Pista{
-    method image() = "sangre.png"
-    
+object noPeligrosa {
+	const aparienciaNecesaria = lupa
+	
+	method reaccionar(pista) {
+		if (detective.aparienciaActual() == aparienciaNecesaria) {
+			pista.desaparecer()
+			detective.sumarUnaPista()
+			game.say(detective, "Pista encontrada!")
+		} else {
+			game.say(detective, "Necesitas la lupa!")
+		}
+	}
 }
-
-class PistaCuchillo inherits Pista {
-    method image() = "cuchillo.png"
-    
-}
-
-class PistaDinamita inherits Pista{
-    method image() = "dinamita.png"
-}
-
-class PistaVeneno inherits Pista{
-    method image() = "veneno.png"
-}
-
-class PistaNota inherits Pista {
-    method image() = "nota_1.png"
-}
-
-class PistaHuella inherits Pista {
-    method image() = "huella_dactilar_1.png"
-}
-
-class PistaFosforos inherits Pista {
-    method image() = "fosforos.png"
-    
-}
-
-class PistaKerosene inherits Pista{
-    method image() = "kerosene.png"
-}
-
-class PistaMolotov inherits Pista{
-    method image() = "molotov.png"
-}
-class PistaNafta inherits Pista{
-    method image() = "bidonNafta.png"
-}
-
-
-
