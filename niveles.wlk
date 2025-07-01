@@ -139,12 +139,12 @@ object nivel2 {
 		game.onTick(
 			100,
 			"pasarNivel2",
-			{ if (detective.pistasEncontradas() == self.cantPistas()) self.terminar() }
+			{ if (detective.pistasEncontradas() == self.cantPistas()) self.terminar(pantallaVictoria) }
 		)
 		game.onTick(
 			100,
 			"perder",
-			{ if (detective.vidas() < 1) self.mostrarPantallaDerrota() }
+			{ if (detective.vidas() < 1) self.terminar(pantallaDerrota) }
 		)
 		musicaFondo.shouldLoop(true)
 		musicaFondo.play()
@@ -156,7 +156,7 @@ object nivel2 {
 		)
 	}
 	
-	method terminar() {
+	method terminar(pantallaX) {
 		hudPistasEncontradas.reiniciar()
 		hudVidas.reiniciar()
 		hudPistasRestantes.reiniciar()
@@ -167,19 +167,7 @@ object nivel2 {
 		game.removeTickEvent("pasarNivel2")
 		game.allVisuals().forEach({ visual => game.removeVisual(visual) })
 		musicaFondo.stop()
-		pantallaVictoria.mostrar()
-	}
-	
-	method mostrarPantallaDerrota() {
-		hudPistasEncontradas.reiniciar()
-		hudVidas.reiniciar()
-		hudPistasRestantes.reiniciar()
-		game.removeVisual(self)
-		game.removeVisual(detective)
-		detective.reiniciarMovimientos()
-		game.removeTickEvent("perder")
-		game.removeTickEvent("pasarNivel2")
-		musicaFondo.stop()
-		pantallaDerrota.mostrar()
+		pantallaX.mostrar()
+		//para evitar repeticion de metodos se pasa por parametro la pantalla dependiendo el resultado del evento
 	}
 }
