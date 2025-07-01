@@ -17,9 +17,9 @@
 
 ### Nueva Versión:
 #### Nivel 1:
-![Captura del juego nivel 1](./assets/capturaJuego.png) 
+![Captura del juego nivel 1](./assets/captura_nivel_1_renovado.png) 
 #### nivel 2:
-![Captura del juego nivel 2](./assets/capturaJuego2.png)
+![Captura del juego nivel 2](./assets/captura_nivel_2_renovado.png)
 
 ## Reglas de Juego / Instrucciones
 
