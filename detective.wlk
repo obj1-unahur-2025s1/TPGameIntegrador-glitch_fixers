@@ -7,10 +7,13 @@ object detective {
 	var property position = game.origin()
 	var property vidas = 3
 	var property pistasEncontradas = 0
-	var property pistasRestantes = nivelActual.cantPistas()
+	//var property pistasRestantes = nivelActual.cantPistas()
+	var pistasRestantes = nivelActual.cantPistas()
 	var property aparienciaActual = lupa
 	var property nivelActual = nivel1
 	
+	method pistasRestantes() = pistasRestantes
+
 	method image() = aparienciaActual.image()
 	
 	method ponerseGuantes() {
