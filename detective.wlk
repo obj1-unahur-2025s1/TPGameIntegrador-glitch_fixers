@@ -7,13 +7,10 @@ object detective {
 	var property position = game.origin()
 	var property vidas = 3
 	var property pistasEncontradas = 0
-	//var property pistasRestantes = nivelActual.cantPistas()
-	var pistasRestantes = nivelActual.cantPistas()
 	var property aparienciaActual = lupa
 	var property nivelActual = nivel1
+	var pistasRestantes = ""
 	
-	method pistasRestantes() = pistasRestantes
-
 	method image() = aparienciaActual.image()
 	
 	method ponerseGuantes() {
@@ -49,8 +46,23 @@ object detective {
 		vidas = 3
 	}
 	
+	method pistasRestantes() = pistasRestantes
+	
+	method setearPistasRestantes(nivel) {
+		pistasRestantes = nivel.cantPistas()
+	}
+	
 	method reiniciarPistasRestantes() {
 		pistasRestantes = nivelActual.cantPistas()
+	}
+	
+	method puedePasarNivel() {
+		if (self.pistasEncontradas() == nivelActual.cantPistas())
+			juego.siguienteNivel()
+	}
+	
+	method puedePerder() {
+		if (self.vidas() < 1) nivelActual.mostrarPantallaDerrota()
 	}
 	
 	method iniciarMovimientos() {
@@ -59,7 +71,7 @@ object detective {
 		keyboard.left().onPressDo({ self.position(self.position().left(1)) })
 		keyboard.right().onPressDo({ self.position(self.position().right(1)) })
 	}
-
+	
 	method reiniciarMovimientos() {
 		keyboard.up().onPressDo({ self.position(self.position().up(-1)) })
 		keyboard.down().onPressDo({ self.position(self.position().down(-1)) })

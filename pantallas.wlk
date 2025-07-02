@@ -53,39 +53,39 @@ object instrucciones {
 	}
 }
 
-object pantallaVictoria {
-	const sonidoVictoria = game.sound("victoria.mp3")
+class Pantalla {
+	const sonido 
+	const img
 	const property position = game.at(0, 0)
-	const property image = "victoria.png"
+	var property image = ""
+	var property sound = ""
 	
-	method mostrar() {
-		sonidoVictoria.play()
-		game.addVisual(self)
+	method cambiarImage() {
+		image = img
+	}
 
-		keyboard.r().onPressDo(
-			{ 
-				sonidoVictoria.stop()
-				game.allVisuals().forEach({ visual => game.removeVisual(visual) })
-				nivel1.iniciar()
-			}
-		)
+	method cambiarSound() {
+		sound =  game.sound(sonido)
+	}
+
+	method clear (){
+		//Debe conocerlo por polimorfismo
+	}
+	
+	method iniciar() {
+		self.cambiarImage()
+		self.cambiarSound()
+		sound.play()
+		game.addVisual(self)
 	}
 }
 
-object pantallaDerrota {
-	const sonidoDerrota = game.sound("derrota.mp3")
-	const property position = game.at(0, 0)
-	const property image = "derrota.png"
-	
-	method mostrar() {
-		sonidoDerrota.play()
-		game.addVisual(self)
-		keyboard.t().onPressDo(
-			{ 
-				game.allVisuals().forEach({ visual => game.removeVisual(visual) })
-				sonidoDerrota.stop()
-				nivel1.iniciar()
-			}
-		)
-	}
-}
+const pantallaVictoria = new Pantalla(
+	sonido = "victoria.mp3",
+	img = "victoria.png"
+)
+
+const pantallaDerrota = new Pantalla(
+	sonido = "derrota.mp3",
+	img = "derrota.png"
+)
